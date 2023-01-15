@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    prometheus:
+      restart: always
+      image: "prom/prometheus"
+      hostname: prometheus
+      container_name: prometheus
+      ports:
+        - "9090:9090"
+      volumes:
+        - ./src/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      command: "--config.file=/etc/prometheus/prometheus.yml"
+
+    fastapi-app:
+        build:
+          context: ./src
+        hostname: fastapi-app
+        container_name: fastapi-app
+        ports:
+          - "8000:8000"
